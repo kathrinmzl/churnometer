@@ -2,7 +2,10 @@ numpy==1.26.1
 pandas==2.1.1
 matplotlib==3.8.0
 seaborn==0.13.2
-ydata-profiling==4.12.0 # This package can be removed prior to deployment
+# ydata-profiling==4.12.0 # This package can be removed prior to deployment
+ydata-profiling==4.8.3 # This package can be removed prior to deployment
+ipython==8.24.0 # This package can be removed prior to deployment
+setuptools==80.9.0 # This package can be removed prior to deployment
 plotly==5.17.0
 ppscore==1.1.0 # This package can be removed prior to deployment
 streamlit==1.40.2
