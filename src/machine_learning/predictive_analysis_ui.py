@@ -13,7 +13,7 @@ def predict_churn(X_live, churn_features, churn_pipeline_dc_fe, churn_pipeline_m
     churn_prediction = churn_pipeline_model.predict(X_live_churn_dc_fe)
     churn_prediction_proba = churn_pipeline_model.predict_proba(
         X_live_churn_dc_fe)
-    # st.write(churn_prediction_proba)
+    #st.write(churn_prediction_proba)
 
     # Create a logic to display the results
     churn_prob = churn_prediction_proba[0, churn_prediction][0]*100
@@ -51,6 +51,7 @@ def predict_tenure(X_live, tenure_features, tenure_pipeline, tenure_labels_map):
             f"will stay **{tenure_levels} months**. "
         )
     else:
+        # acknowledge poor performance/ model limitations
         statement = (
             f"* The model has predicted the prospect would stay **{tenure_levels} months**, "
             f"however we acknowledge that the recall and precision levels for {tenure_levels} is not "

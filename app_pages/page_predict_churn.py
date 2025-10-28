@@ -26,6 +26,8 @@ def page_predict_churn_body():
 
     st.write("### ML Pipeline: Predict Prospect Churn")
     # display pipeline training summary conclusions
+    # In the conclusions summary, we are primarily interested in documenting the ML performance,
+    # so technical users that visit this page can quickly grasp the outcome from training that pipeline.
     st.info(
         f"* The pipeline was tuned aiming at least 0.80 Recall on 'Yes Churn' class, "
         f"since we are interested in this project in detecting a potential churner. \n"

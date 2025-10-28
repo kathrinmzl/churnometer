@@ -6,6 +6,7 @@ from src.machine_learning.predictive_analysis_ui import (
     predict_tenure,
     predict_cluster)
 
+# answers business requirement 2
 
 def page_prospect_body():
 
@@ -52,10 +53,19 @@ def page_prospect_body():
     )
     st.write("---")
 
-    # Generate Live Data
+    # Generate/save Live Data
+    
+    # use to check which inout variables you will need to implement
     # check_variables_for_UI(tenure_features, churn_features, cluster_features)
     X_live = DrawInputsWidgets()
 
+    '''
+    Answer business logic:
+    The client is interested in determining whether or not a given prospect will churn. 
+    If so, the client is interested to know when. 
+    In addition, the client is interested in learning from which cluster this prospect 
+    will belong in the customer base.
+    '''
     # predict on live data
     if st.button("Run Predictive Analysis"):
         churn_prediction = predict_churn(
@@ -70,6 +80,8 @@ def page_prospect_body():
 
 
 def check_variables_for_UI(tenure_features, churn_features, cluster_features):
+    # combines all features and displays the unique values.
+    
     import itertools
 
     # The widgets inputs are the features used in all pipelines (tenure, churn, cluster)
@@ -84,16 +96,30 @@ def check_variables_for_UI(tenure_features, churn_features, cluster_features):
 
 
 def DrawInputsWidgets():
+    '''
+    return a DataFrame with 1 row containing the prospect’s information.
+    The interactive widgets will feed the data values to the DataFrame in real time.
+      
+    Then, we need to populate the widgets. If it is a categorical variable, we list the available options.
+    If it is a numerical variable, we will set the initial value as the median value from
+    the variable, the minimum widget value as 0.4 of the min from that variable and the maximum widget
+    value as x2 the max value from that variable. 
+    
+    The decision to display the median value and the 0.4
+    and 2.0 are arbitrary, in your project you could set other values if you would like. To populate
+    the proper initial values, we load the dataset, so we can extract the values from it afterwards.
+    '''
 
     # load dataset
     df = load_telco_data()
     percentageMin, percentageMax = 0.4, 2.0
 
-# we create input widgets only for 6 features
+    # we create input widgets only for 6 features
     col1, col2, col3, col4 = st.columns(4)
     col5, col6, col7, col8 = st.columns(4)
 
     # We are using these features to feed the ML pipeline - values copied from check_variables_for_UI() result
+    # {'PhoneService', 'MonthlyCharges', 'PaymentMethod', 'InternetService', 'Contract', 'OnlineBackup'}
 
     # create an empty DataFrame, which will be the live data
     X_live = pd.DataFrame([], index=[0])
@@ -104,9 +130,9 @@ def DrawInputsWidgets():
         feature = "Contract"
         st_widget = st.selectbox(
             label=feature,
-            options=df[feature].unique()
+            options=df[feature].unique() # unqiue values of "Contract"
         )
-    X_live[feature] = st_widget
+    X_live[feature] = st_widget # Add widget to live dataframe
 
     with col2:
         feature = "InternetService"
@@ -150,6 +176,7 @@ def DrawInputsWidgets():
         )
     X_live[feature] = st_widget
 
+    # show live data table 
     # st.write(X_live)
 
     return X_live
